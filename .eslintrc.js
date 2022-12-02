@@ -19,5 +19,6 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
+    camelcase: 0
   }
 }

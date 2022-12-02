@@ -1,20 +1,14 @@
 import React from 'react'
-import {
-  SafeAreaView,
-  StatusBar
-} from 'react-native'
-
-import Navigation from './navigation'
+import AppNavigationContainer from './navigation/AppNavigationContainer'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
 
 const App = () => {
   return (
     <>
-       <SafeAreaView style={{ backgroundColor: '#fff' }}>
-        <StatusBar
-          barStyle={'dark-content'}
-        />
-       </SafeAreaView>
-      <Navigation />
+      <Provider store={store}>
+        <AppNavigationContainer />
+      </Provider>
     </>
   )
 }
