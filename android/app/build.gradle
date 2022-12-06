@@ -219,6 +219,9 @@ android {
         }
       release {
         storeFile file('lyrics_finder.keystore')
+        storePassword '$Voip16062002'
+        keyAlias 'vlad_semreg_lyrics_finder'
+        keyPassword '$Voip16062002'
        }
     }
     buildTypes {

@@ -1,27 +1,43 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import TrackDetailsView from './TrackDetails.view'
-import { NativeStackScreenProps } from 'react-native-screens/native-stack'
-import { BrowseTracksStackParamList } from '../../navigation/BrowseTracksStackScreens'
-import { Screens } from '../../common/constants/navigation'
-// import { trackDetailsMock } from '../../mock/trackDetails'
-// import { trackLyricsMock } from '../../mock/trackLyricsMock'
 import { useFetchTrackByIdQuery, useFetchLyricsQuery } from '../../services/tracks/tracksApi'
-import { Text } from 'react-native'
-import { Loader } from '../../common/components'
+import { Alert, Text } from 'react-native'
+import { goBack } from '../../navigation/navigationRef'
+import { checkIfTrackInFavorites } from '../../common/helpers/favorites'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { addTrack, removeTrack, selectFavoriteTracksIds } from '../../redux/favoritesSlice'
+import { HeaderFavoriteButton, Loader } from '../../common/components'
+import { TrackDetailsMode } from '../../navigation/FavoritesStackScreens'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
-type Props = NativeStackScreenProps<BrowseTracksStackParamList, Screens.BROWSE_TRACKS_DETAILS>
+type TrackDetailsParams = {
+  trackId: number
+  commontrackId: number
+  mode?: TrackDetailsMode
+}
 
-const TrackDetailsContainer: React.FC<Props> = ({ route: { params }, navigation }) => {
+const TrackDetailsContainer = () => {
+  const route = useRoute<RouteProp<{ params: TrackDetailsParams }, 'params'>>()
+  const navigation = useNavigation()
+  const dispatch = useAppDispatch()
+
   const {
     data: details,
     isLoading: isTrackDetailsLoading,
     error: detailsError
-  } = useFetchTrackByIdQuery(params.commontrackId)
+  } = useFetchTrackByIdQuery(route.params.commontrackId)
   const {
     data: lyrics,
     isLoading: isLyricsLoading,
     error: lyricsError
-  } = useFetchLyricsQuery(params.trackId)
+  } = useFetchLyricsQuery(route.params.trackId)
+
+  const favoritesIds = useAppSelector(selectFavoriteTracksIds)
+
+  const isInFavorites = useMemo(() =>
+    checkIfTrackInFavorites(details?.trackId, favoritesIds),
+  [details?.trackId, favoritesIds]
+  )
 
   useEffect(() => {
     if (details?.trackName) {
@@ -29,6 +45,33 @@ const TrackDetailsContainer: React.FC<Props> = ({ route: { params }, navigation 
       navigation.setOptions({ title: details.trackName })
     }
   }, [details?.trackName])
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderFavoriteButton
+          details={details}
+          isInFavorites={isInFavorites}
+          onAdd={() => dispatch(addTrack(details))}
+          onRemove={() => dispatch(removeTrack(details?.trackId))}
+          onRemoveCallback={() => {
+            // If we are inside favorites stack, navigate backwards
+            if (route.params.mode === TrackDetailsMode.FAVORITES) {
+              goBack()
+            }
+          }}
+        />
+      )
+    })
+  }, [navigation, isInFavorites, details])
+
+  useEffect(() => {
+    if (detailsError || lyricsError) {
+      Alert.alert('Unable to load this track.', 'Please try again later.')
+
+      goBack()
+    }
+  }, [detailsError, lyricsError])
 
   if (isLyricsLoading || isTrackDetailsLoading) {
     return <Loader />

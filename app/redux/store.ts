@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import createDebugger from 'redux-flipper'
 
-import tracksReducer from './tracksSlice'
+import favoritesReducer from './favoritesSlice'
+
 import { tracksApi } from '../services/tracks/tracksApi'
 
 export const store = configureStore({
   devTools: true,
   reducer: {
-    tracks: tracksReducer,
+    favorites: favoritesReducer,
     [tracksApi.reducerPath]: tracksApi.reducer
   },
   middleware: getDefaultMiddleware =>

@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
   FetchLyricsRawResponse,
   FetchTrackByIdRawResponse,
-  FetchTracksRawResponse, Lyrics,
+  FetchTracksRawResponse,
+  Lyrics,
   Track,
   TrackDetails
 } from './tracksTypes'

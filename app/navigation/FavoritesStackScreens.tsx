@@ -4,15 +4,23 @@ import { Screens } from '../common/constants/navigation'
 import { FavoritesScreen } from '../screens/FavoritesScreen'
 import { TrackDetailsScreen } from '../screens/TrackDetailsScreen'
 
-export type FavoritesStackParamList = {
+export enum TrackDetailsMode {
+  // eslint-disable-next-line no-unused-vars
+  FAVORITES,
+  // eslint-disable-next-line no-unused-vars
+  BROWSE
+}
+
+export type FavoritesStackParamsList = {
   [Screens.FAVORITES]: undefined
   [Screens.FAVORITES_TRACK_DETAILS]: {
     trackId: number
     commontrackId: number
+    mode: TrackDetailsMode
   }
 }
 
-const Stack = createStackNavigator<FavoritesStackParamList>()
+const Stack = createStackNavigator<FavoritesStackParamsList>()
 
 const FavoritesStackScreens = () => (
   <Stack.Navigator>
@@ -27,7 +35,8 @@ const FavoritesStackScreens = () => (
       name={Screens.FAVORITES_TRACK_DETAILS}
       component={TrackDetailsScreen}
       options={{
-        title: 'Favorite track info'
+        title: 'Favorite track info',
+        headerBackTitle: 'Back'
       }}
     />
   </Stack.Navigator>

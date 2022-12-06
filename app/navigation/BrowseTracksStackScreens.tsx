@@ -6,15 +6,18 @@ import { TrackDetailsScreen } from '../screens/TrackDetailsScreen'
 // @ts-ignore
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export type BrowseTracksStackParamList = {
+export type BrowseTracksStackParamsList = {
   [Screens.BROWSE_TRACKS_LIST]: undefined
   [Screens.BROWSE_TRACKS_DETAILS]: {
     trackId: number
     commontrackId: number
+    z: number
+    x: number
+    c: number
   }
 }
 
-const Stack = createStackNavigator<BrowseTracksStackParamList>()
+const Stack = createStackNavigator<BrowseTracksStackParamsList>()
 
 const BrowseTracksStackScreens = () => (
   <Stack.Navigator>
@@ -30,7 +33,18 @@ const BrowseTracksStackScreens = () => (
       component={TrackDetailsScreen}
       options={{
         title: 'Details & Lyrics',
-        headerBackTitle: 'Back'
+        headerBackTitle: 'Back',
+        headerRight: () => (
+          <Icon
+            name='cards-heart-outline'
+            size={27}
+            color='#45484a'
+            style={{
+              alignSelf: 'center',
+              justifySelf: 'center'
+            }}
+          />
+        )
       }}
     />
   </Stack.Navigator>

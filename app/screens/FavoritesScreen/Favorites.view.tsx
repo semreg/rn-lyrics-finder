@@ -1,11 +1,26 @@
 import React from 'react'
-import { Text, View } from 'react-native'
-import styles from './Favorites.style'
+import { Track } from '../../services/tracks/tracksTypes'
+import { TrackList } from '../../common/components'
 
-const FavoritesView = () => (
-  <View>
-    <Text style={styles.redText}>FavoritesScreen</Text>
-  </View>
+type PropTypes = {
+  favoriteTracks: Track[]
+  favoritesIds: number[]
+  onTrackPress: (trackId: number, commontrackId: number) => void
+  onAddToFavoritesPress: (track: Track) => void
+}
+
+const FavoritesView: React.FC<PropTypes> = ({
+  favoriteTracks,
+  favoritesIds,
+  onTrackPress,
+  onAddToFavoritesPress
+}) => (
+  <TrackList
+    tracks={favoriteTracks}
+    onTrackPress={onTrackPress}
+    onAddToFavoritesPress={onAddToFavoritesPress}
+    favoritesIds={favoritesIds}
+  />
 )
 
 export default FavoritesView
