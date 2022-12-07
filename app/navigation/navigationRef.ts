@@ -1,6 +1,10 @@
-import { createNavigationContainerRef, ParamListBase } from '@react-navigation/native'
+import {
+  createNavigationContainerRef,
+  ParamListBase
+} from '@react-navigation/native'
 
-export const navigationRef = createNavigationContainerRef<ParamListBase>()
+export const navigationRef =
+  createNavigationContainerRef<ParamListBase>()
 
 export const navigate = (name: string, params: Record<string, any>) =>
   navigationRef.current?.navigate(name, params)

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export enum Paths {
   DASHBOARD = 'dashboard',
   HOME = 'home',
@@ -16,6 +18,7 @@ export enum Stacks {
 export enum Screens {
   BROWSE_TRACKS_LIST = 'browse-tracks/list',
   BROWSE_TRACKS_DETAILS = 'browse-tracks/details',
+  BROWSE_TRACKS_FILTERS_MODAL = 'browse-tracks/select-filters-modal',
   FAVORITES = 'favorites',
   FAVORITES_TRACK_DETAILS = 'favorites/details'
 }

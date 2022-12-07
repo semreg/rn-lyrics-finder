@@ -1,14 +1,26 @@
 import React, { useEffect, useMemo } from 'react'
-import TrackDetailsView from './TrackDetails.view'
-import { useFetchTrackByIdQuery, useFetchLyricsQuery } from '../../services/tracks/tracksApi'
 import { Alert, Text } from 'react-native'
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from '@react-navigation/native'
+
+import TrackDetailsView from './TrackDetails.view'
+import {
+  useFetchTrackByIdQuery,
+  useFetchLyricsQuery
+} from '../../services/tracks/tracksApi'
 import { goBack } from '../../navigation/navigationRef'
 import { checkIfTrackInFavorites } from '../../common/helpers/favorites'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { addTrack, removeTrack, selectFavoriteTracksIds } from '../../redux/favoritesSlice'
+import {
+  addTrack,
+  removeTrack,
+  selectFavoriteTracksIds
+} from '../../redux/favoritesSlice'
 import { HeaderFavoriteButton, Loader } from '../../common/components'
 import { TrackDetailsMode } from '../../navigation/FavoritesStackScreens'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
 type TrackDetailsParams = {
   trackId: number
@@ -17,7 +29,8 @@ type TrackDetailsParams = {
 }
 
 const TrackDetailsContainer = () => {
-  const route = useRoute<RouteProp<{ params: TrackDetailsParams }, 'params'>>()
+  const route =
+    useRoute<RouteProp<{ params: TrackDetailsParams }, 'params'>>()
   const navigation = useNavigation()
   const dispatch = useAppDispatch()
 
@@ -34,9 +47,9 @@ const TrackDetailsContainer = () => {
 
   const favoritesIds = useAppSelector(selectFavoriteTracksIds)
 
-  const isInFavorites = useMemo(() =>
-    checkIfTrackInFavorites(details?.trackId, favoritesIds),
-  [details?.trackId, favoritesIds]
+  const isInFavorites = useMemo(
+    () => checkIfTrackInFavorites(details?.trackId, favoritesIds),
+    [details?.trackId, favoritesIds]
   )
 
   useEffect(() => {
@@ -44,7 +57,7 @@ const TrackDetailsContainer = () => {
       // @ts-ignore
       navigation.setOptions({ title: details.trackName })
     }
-  }, [details?.trackName])
+  }, [details?.trackName, navigation])
 
   useEffect(() => {
     navigation.setOptions({
@@ -63,11 +76,20 @@ const TrackDetailsContainer = () => {
         />
       )
     })
-  }, [navigation, isInFavorites, details])
+  }, [
+    navigation,
+    isInFavorites,
+    details,
+    dispatch,
+    route.params.mode
+  ])
 
   useEffect(() => {
     if (detailsError || lyricsError) {
-      Alert.alert('Unable to load this track.', 'Please try again later.')
+      Alert.alert(
+        'Unable to load this track.',
+        'Please try again later.'
+      )
 
       goBack()
     }
@@ -82,10 +104,7 @@ const TrackDetailsContainer = () => {
   }
 
   return (
-    <TrackDetailsView
-      trackDetails={details}
-      trackLyrics={lyrics}
-    />
+    <TrackDetailsView trackDetails={details} trackLyrics={lyrics} />
   )
 }
 

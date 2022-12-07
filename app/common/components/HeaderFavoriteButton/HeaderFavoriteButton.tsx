@@ -1,7 +1,8 @@
 import React from 'react'
-import { Alert, Pressable } from 'react-native'
+import { Alert, TouchableOpacity } from 'react-native'
 // @ts-ignore
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import { TrackDetails } from '../../../services/tracks/tracksTypes'
 
 type Props = {
@@ -47,7 +48,7 @@ const HeaderFavoriteButton: React.FC<Props> = ({
   }
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() => {
         // Alert.alert(String(Boolean(details)))
 
@@ -65,11 +66,10 @@ const HeaderFavoriteButton: React.FC<Props> = ({
         size={27}
         color={isInFavorites ? '#FF2D55' : '#45484a'}
         style={{
-          alignSelf: 'flex-end',
-          justifySelf: 'center'
+          alignSelf: 'flex-end'
         }}
       />
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 

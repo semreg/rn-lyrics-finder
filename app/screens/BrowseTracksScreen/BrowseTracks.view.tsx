@@ -1,5 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
+
 import styles from './BrowseTracks.style'
 import { Track } from '../../services/tracks/tracksTypes'
 import { TrackList } from '../../common/components'

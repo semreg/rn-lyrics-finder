@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import createDebugger from 'redux-flipper'
 
 import favoritesReducer from './favoritesSlice'
-
 import { tracksApi } from '../services/tracks/tracksApi'
 
 export const store = configureStore({
@@ -11,7 +10,7 @@ export const store = configureStore({
     favorites: favoritesReducer,
     [tracksApi.reducerPath]: tracksApi.reducer
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(createDebugger())
       .concat(tracksApi.middleware)

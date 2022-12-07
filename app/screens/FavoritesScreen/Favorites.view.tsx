@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Track } from '../../services/tracks/tracksTypes'
 import { TrackList } from '../../common/components'
 
@@ -20,6 +21,7 @@ const FavoritesView: React.FC<PropTypes> = ({
     onTrackPress={onTrackPress}
     onAddToFavoritesPress={onAddToFavoritesPress}
     favoritesIds={favoritesIds}
+    doShowSearch={false}
   />
 )
 

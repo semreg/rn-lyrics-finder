@@ -1,5 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+
 import { Screens } from '../common/constants/navigation'
 import { FavoritesScreen } from '../screens/FavoritesScreen'
 import { TrackDetailsScreen } from '../screens/TrackDetailsScreen'

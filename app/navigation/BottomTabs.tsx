@@ -1,10 +1,9 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { FavoritesScreen } from '../screens/FavoritesScreen'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import { Stacks } from '../common/constants/navigation'
 import BrowseTracksStackScreens from './BrowseTracksStackScreens'
-// @ts-ignore
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FavoritesStackScreens from './FavoritesStackScreens'
 
 const Tab = createBottomTabNavigator()
@@ -17,8 +16,9 @@ const BottomTabs = () => (
       options={{
         tabBarLabel: 'Tracks',
         headerShown: false,
+        // TODO: lookup
         tabBarIcon: ({ color, size }) => (
-          <Icon name="album" size={size} color={color} />
+          <Icon name='album' size={size} color={color} />
         )
       }}
     />
@@ -29,7 +29,7 @@ const BottomTabs = () => (
         tabBarLabel: 'Favorites',
         headerShown: false,
         tabBarIcon: ({ color, size }) => (
-          <Icon name="heart" size={size} color={color} />
+          <Icon name='heart' size={size} color={color} />
         )
       }}
     />
